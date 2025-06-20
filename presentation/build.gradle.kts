@@ -50,11 +50,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Navigation
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
-
-    //Hilt
+    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
@@ -62,7 +58,10 @@ dependencies {
     // Paging 3
     implementation(libs.androidx.paging.runtime)
 
-    //Glide
+    // Glide
     implementation(libs.glide)
     kapt(libs.compiler)
+
+    // Fragment KTX
+    implementation(libs.androidx.fragment.ktx)
 }
