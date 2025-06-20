@@ -25,5 +25,9 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.soo.presentation.activity.PokemonDetailActivity"
+            android:exported="false" />
+
     </application>
 </manifest>
