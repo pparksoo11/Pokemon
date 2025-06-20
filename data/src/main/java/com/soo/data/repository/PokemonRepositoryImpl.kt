@@ -2,11 +2,15 @@ package com.soo.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingData
+import com.soo.data.common.mapSuccess
+import com.soo.data.mapper.toDomain
 import com.soo.data.paging.PokemonListPagingSource
 import com.soo.data.remote.datasource.PokemonDataSource
 import com.soo.domain.model.Pokemon
+import com.soo.domain.model.PokemonInfo
 import com.soo.domain.repository.PokemonRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PokemonRepositoryImpl @Inject constructor(
@@ -20,5 +24,11 @@ class PokemonRepositoryImpl @Inject constructor(
             ),
             pagingSourceFactory = { PokemonListPagingSource(pokemonDataSource) }
         ).flow
+    }
+
+    override fun getPokemonInfo(name: String): Flow<PokemonInfo> {
+        return flow {
+            pokemonDataSource.getPokemonInfo(name).mapSuccess { emit(it.toDomain()) }
+        }
     }
 }

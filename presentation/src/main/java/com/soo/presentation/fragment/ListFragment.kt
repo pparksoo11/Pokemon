@@ -1,14 +1,12 @@
 package com.soo.presentation.fragment
 
 import android.util.Log
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
-import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import com.soo.presentation.R
 import com.soo.presentation.adapter.PokemonListAdapter
@@ -64,11 +62,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(R.layout.fragment_list) {
             binding.tvError.isVisible = hasError || isListEmpty
         }
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                // 초기 데이터 로딩
-                pokemonListViewModel.getPokemonList()
-            }
-        }
+        // 초기 데이터 로딩
+        pokemonListViewModel.getPokemonList()
     }
 }

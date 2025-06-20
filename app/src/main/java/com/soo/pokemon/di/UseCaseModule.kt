@@ -1,6 +1,7 @@
 package com.soo.pokemon.di
 
 import com.soo.domain.repository.PokemonRepository
+import com.soo.domain.usecase.GetPokemonInfoUseCase
 import com.soo.domain.usecase.GetPokemonListUseCase
 import dagger.Module
 import dagger.Provides
@@ -16,5 +17,12 @@ object UseCaseModule {
         repository: PokemonRepository
     ): GetPokemonListUseCase {
         return GetPokemonListUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetPokemonInfoUseCase(
+        repository: PokemonRepository
+    ): GetPokemonInfoUseCase {
+        return GetPokemonInfoUseCase(repository)
     }
 }

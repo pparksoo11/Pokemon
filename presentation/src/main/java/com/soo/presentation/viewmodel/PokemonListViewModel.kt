@@ -9,6 +9,7 @@ import com.soo.domain.usecase.GetPokemonListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,7 +20,7 @@ class PokemonListViewModel @Inject constructor(
     private val _pokemonList = MutableStateFlow<PagingData<Pokemon>>(PagingData.empty())
     val pokemonList: StateFlow<PagingData<Pokemon>> = _pokemonList
 
-    suspend fun getPokemonList() {
+    fun getPokemonList() = viewModelScope.launch {
         getPokemonListUseCase().cachedIn(viewModelScope).collect {
             _pokemonList.value = it
         }

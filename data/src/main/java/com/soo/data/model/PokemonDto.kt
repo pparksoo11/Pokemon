@@ -1,6 +1,6 @@
 package com.soo.data.model
 
-data class Pokemon(
+data class PokemonDto(
     val name: String?,
     val url: String?,
 )
