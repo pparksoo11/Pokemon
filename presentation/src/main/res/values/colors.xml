@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="type_fire">#F08030</color>
+    <color name="type_water">#6890F0</color>
+    <color name="type_grass">#78C850</color>
+    <color name="type_electric">#F8D030</color>
+    <color name="type_psychic">#F85888</color>
+    <color name="type_normal">#A8A878</color>
+    <color name="type_fighting">#C03028</color>
+    <color name="type_default">#A0A0A0</color>
+
+    <color name="light_gray">#F0F0F0</color>
+    <color name="blue">#0000ff</color>
+    <color name="crowd_flower">#a6e86c</color>
+</resources>

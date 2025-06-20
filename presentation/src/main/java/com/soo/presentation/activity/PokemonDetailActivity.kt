@@ -2,11 +2,14 @@ package com.soo.presentation.activity
 
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.core.view.marginEnd
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
+import com.google.android.flexbox.FlexboxLayout
 import com.soo.presentation.R
 import com.soo.presentation.base.BaseActivity
 import com.soo.presentation.databinding.ActivityPokemonDetailBinding
@@ -33,6 +36,26 @@ class PokemonDetailActivity : BaseActivity<ActivityPokemonDetailBinding>(R.layou
                         binding.pokemonInfo = info
 
                         Glide.with(this@PokemonDetailActivity).load(info.getImageUrl()).into(binding.imgPokemon)
+
+                        // TODO type에 따라 배경 다르게 구현하려면 추가 구현 필요
+                        info.types.forEach { type ->
+                            val tvType = TextView(this@PokemonDetailActivity).apply {
+                                text = type.name
+                                setPadding(30, 10, 30, 10)
+                                
+                                val layoutParams = FlexboxLayout.LayoutParams(
+                                    FlexboxLayout.LayoutParams.WRAP_CONTENT,
+                                    FlexboxLayout.LayoutParams.WRAP_CONTENT
+                                ).apply {
+                                    setMargins(0, 0, 10, 0) // 왼쪽, 위, 오른쪽, 아래 마진
+                                }
+                                this.layoutParams = layoutParams
+                                setBackgroundResource(R.drawable.bg_type_chip)
+                                textSize = 16f
+                                setTextColor(resources.getColor(R.color.black, null))
+                            }
+                            binding.typeContainer.addView(tvType)
+                        }
                         binding.executePendingBindings()
                     }
                 }

@@ -18,7 +18,9 @@
 
         <activity
             android:name="com.soo.presentation.activity.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="List"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,7 +29,9 @@
 
         <activity
             android:name="com.soo.presentation.activity.PokemonDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Detail"
+            />
 
     </application>
 </manifest>

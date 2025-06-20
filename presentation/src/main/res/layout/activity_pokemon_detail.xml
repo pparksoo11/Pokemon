@@ -13,11 +13,14 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.PokemonDetailActivity">
+        tools:context=".activity.PokemonDetailActivity"
+        android:padding="20dp"
+        >
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cartView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:layout_margin="8dp"
             android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="12dp"
@@ -26,22 +29,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:strokeColor="@android:color/darker_gray"
-            app:strokeWidth="1dp">
+            app:strokeWidth="1dp"
+            >
 
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="8dp"
+                >
 
                 <ImageView
                     android:id="@+id/imgPokemon"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:contentDescription="포켓몬 이미지"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
 
                 <TextView
                     android:id="@+id/tvName"
@@ -50,8 +60,121 @@
                     android:layout_marginTop="8dp"
                     android:textColor="@android:color/black"
                     android:text="@{pokemonInfo.name}"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="20dp"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="타입"
+            app:layout_constraintTop_toBottomOf="@+id/cartView"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/typeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tvType"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            app:flexWrap="wrap"
+            app:justifyContent="flex_start"
+            />
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기본 정보"
+            app:layout_constraintTop_toBottomOf="@+id/typeContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            />
+
+        <LinearLayout
+            android:id="@+id/layoutHeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tvInfo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_rounded_gray"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="키"
+                android:textColor="@color/blue"
+                />
+
+            <TextView
+                android:id="@+id/tvHeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{pokemonInfo.height}"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/layoutHeight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_rounded_gray"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="몸무게"
+                android:textColor="@color/blue"
+                />
+
+            <TextView
+                android:id="@+id/tvWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{pokemonInfo.weight}"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAddFavorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+ 즐겨찾기 추가"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -28,8 +28,8 @@ fun PokemonInfoDto.toDomain(): PokemonInfo {
     return PokemonInfo(
         id = id ?: -1,
         name = name ?: "",
-        weight = weight ?: -1,
-        height = height ?: -1,
+        weight = weight?.toString() ?: "",
+        height = height?.toString() ?: "",
         types = types
     )
 }

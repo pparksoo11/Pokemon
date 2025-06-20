@@ -64,4 +64,8 @@ dependencies {
 
     // Fragment KTX
     implementation(libs.androidx.fragment.ktx)
+
+    // flexboxLayout
+    implementation(libs.flexbox)
+
 }
