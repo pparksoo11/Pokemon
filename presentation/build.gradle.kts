@@ -58,4 +58,11 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
+
+    // Paging 3
+    implementation(libs.androidx.paging.runtime)
+
+    //Glide
+    implementation(libs.glide)
+    kapt(libs.compiler)
 }

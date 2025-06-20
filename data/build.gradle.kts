@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -41,4 +43,22 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
+
+    //okHttp
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    //Retrofit
+    implementation(libs.retrofit)
+
+    //Gson Converter
+    implementation(libs.converter.gson)
+
+    // Paging 3
+    implementation(libs.androidx.paging.runtime)
 }

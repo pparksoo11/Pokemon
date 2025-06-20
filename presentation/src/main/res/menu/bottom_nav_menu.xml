@@ -3,10 +3,12 @@
 
     <item
         android:id="@+id/listFragment"
+        android:icon="@drawable/list"
         android:title= "리스트" />
 
     <item
         android:id="@+id/favoriteFragment"
+        android:icon="@drawable/favorite"
         android:title= "즐겨찾기" />
 
 </menu>
