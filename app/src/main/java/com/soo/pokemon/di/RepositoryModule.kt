@@ -1,5 +1,6 @@
 package com.soo.pokemon.di
 
+import com.soo.data.local.datasource.PokemonLocalDataSource
 import com.soo.data.remote.datasource.PokemonDataSource
 import com.soo.data.repository.PokemonRepositoryImpl
 import com.soo.domain.repository.PokemonRepository
@@ -16,8 +17,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun providePokemonRepository(
-        dataSource: PokemonDataSource
+        dataSource: PokemonDataSource,
+        localDataSource: PokemonLocalDataSource
     ): PokemonRepository {
-        return PokemonRepositoryImpl(dataSource)
+        return PokemonRepositoryImpl(dataSource, localDataSource)
     }
 }

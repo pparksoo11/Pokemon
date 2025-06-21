@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class GetPokemonListUseCase(
     private val pokeRepository: PokemonRepository
 ) {
-    suspend operator fun invoke(): Flow<PagingData<Pokemon>> {
+    operator fun invoke(): Flow<PagingData<Pokemon>> {
         return pokeRepository.getPokemonList()
     }
 }

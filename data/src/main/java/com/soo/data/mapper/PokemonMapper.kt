@@ -1,5 +1,7 @@
 package com.soo.data.mapper
 
+import com.soo.data.db.entity.PokemonEntity
+import com.soo.data.db.entity.PokemonTypeEntity
 import com.soo.data.model.PokemonInfoDto
 import com.soo.data.model.PokemonResponse
 import com.soo.domain.model.Pokemon
@@ -28,8 +30,30 @@ fun PokemonInfoDto.toDomain(): PokemonInfo {
     return PokemonInfo(
         id = id ?: -1,
         name = name ?: "",
-        weight = weight?.toString() ?: "",
-        height = height?.toString() ?: "",
+        weight = weight ?: -1,
+        height = height ?: -1,
         types = types
     )
+}
+
+fun PokemonInfo.toEntity(): PokemonEntity {
+    return PokemonEntity(
+        id = id,
+        name = name,
+        weight = weight,
+        height = height,
+        types = types.toEntityList(id),
+        image = getImageUrl(),
+    )
+}
+
+fun PokemonType.toEntity(pokemonId: Int): PokemonTypeEntity {
+    return PokemonTypeEntity(
+        id = pokemonId,
+        name = this.name
+    )
+}
+
+fun List<PokemonType>.toEntityList(pokemonId: Int): List<PokemonTypeEntity> {
+    return this.map { it.toEntity(pokemonId) }
 }

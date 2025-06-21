@@ -9,4 +9,6 @@ interface PokemonRepository {
     fun getPokemonList(): Flow<PagingData<Pokemon>>
 
     fun getPokemonInfo(name: String): Flow<PokemonInfo>
+
+    suspend fun insertFavoritePokemon(pokemon: PokemonInfo)
 }

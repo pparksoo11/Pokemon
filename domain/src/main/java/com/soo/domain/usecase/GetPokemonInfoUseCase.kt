@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class GetPokemonInfoUseCase(
     private val pokeRepository: PokemonRepository
 ) {
-    suspend operator fun invoke(name: String): Flow<PokemonInfo> {
+    operator fun invoke(name: String): Flow<PokemonInfo> {
         return pokeRepository.getPokemonInfo(name)
     }
 }

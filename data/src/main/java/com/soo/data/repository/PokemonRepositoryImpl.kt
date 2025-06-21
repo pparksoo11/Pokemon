@@ -3,7 +3,9 @@ package com.soo.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import com.soo.data.common.mapSuccess
+import com.soo.data.local.datasource.PokemonLocalDataSource
 import com.soo.data.mapper.toDomain
+import com.soo.data.mapper.toEntity
 import com.soo.data.paging.PokemonListPagingSource
 import com.soo.data.remote.datasource.PokemonDataSource
 import com.soo.domain.model.Pokemon
@@ -14,7 +16,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PokemonRepositoryImpl @Inject constructor(
-    private val pokemonDataSource: PokemonDataSource
+    private val pokemonDataSource: PokemonDataSource,
+    private val pokemonLocalDataSource: PokemonLocalDataSource
 ): PokemonRepository {
     override fun getPokemonList(): Flow<PagingData<Pokemon>> {
         return Pager(
@@ -30,5 +33,9 @@ class PokemonRepositoryImpl @Inject constructor(
         return flow {
             pokemonDataSource.getPokemonInfo(name).mapSuccess { emit(it.toDomain()) }
         }
+    }
+
+    override suspend fun insertFavoritePokemon(pokemon: PokemonInfo) {
+        pokemonLocalDataSource.insertFavoritePokemon(pokemon.toEntity())
     }
 }

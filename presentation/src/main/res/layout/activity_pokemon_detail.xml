@@ -129,7 +129,7 @@
                 android:id="@+id/tvHeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{pokemonInfo.height}"
+                android:text="@{String.valueOf(pokemonInfo.height)}"
                 android:layout_marginStart="10dp"
                 android:textColor="@color/black"
                 />
@@ -159,7 +159,7 @@
                 android:id="@+id/tvWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{pokemonInfo.weight}"
+                android:text="@{String.valueOf(pokemonInfo.weight)}"
                 android:layout_marginStart="10dp"
                 android:textColor="@color/black"
                 />

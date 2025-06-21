@@ -3,6 +3,7 @@ package com.soo.presentation.activity
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.marginEnd
 import androidx.lifecycle.Lifecycle
@@ -12,9 +13,11 @@ import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayout
 import com.soo.presentation.R
 import com.soo.presentation.base.BaseActivity
+import com.soo.presentation.base.BaseViewModel
 import com.soo.presentation.databinding.ActivityPokemonDetailBinding
 import com.soo.presentation.viewmodel.PokemonInfoViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -56,7 +59,24 @@ class PokemonDetailActivity : BaseActivity<ActivityPokemonDetailBinding>(R.layou
                             }
                             binding.typeContainer.addView(tvType)
                         }
+
+                        binding.btnAddFavorite.setOnClickListener {
+                            pokemonInfoViewModel.insertFavoritePokemon(info)
+                        }
+
                         binding.executePendingBindings()
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                pokemonInfoViewModel.uiEvent.collect { event ->
+                    when(event) {
+                        is BaseViewModel.UiEvent.ShowToast -> {
+                            Toast.makeText(this@PokemonDetailActivity, event.message, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
