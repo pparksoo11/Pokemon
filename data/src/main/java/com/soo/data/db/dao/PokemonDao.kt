@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PokemonDao {
 
-    // 전체 포켓몬 정보와 타입 조회
+    // 전체 포켓몬 정보 조회
     @Transaction
     @Query("SELECT * FROM pokemon")
-    suspend fun getFavoritePokemonList(): List<PokemonEntity>
+    fun getFavoritePokemonList(): Flow<List<PokemonEntity>>
 
     // 특정 포켓몬 조회
     @Transaction

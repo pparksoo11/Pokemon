@@ -22,9 +22,7 @@ class PokemonFavoriteViewModel @Inject constructor(
 
     fun getFavoritePokemonList() = viewModelScope.launch {
         getFavoritePokemonListUseCase()
-            .map { domainList -> domainList.map { it.toFavoriteUiModel() } }
-            .collect { uiList ->
-                _favoritePokemonList.value = uiList
-            }
+            .map { list -> list.map { it.toFavoriteUiModel() } }
+            .collect { _favoritePokemonList.value = it }
     }
 }

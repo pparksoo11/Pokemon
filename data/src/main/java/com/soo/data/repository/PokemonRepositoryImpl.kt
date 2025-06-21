@@ -13,6 +13,7 @@ import com.soo.domain.model.PokemonInfo
 import com.soo.domain.repository.PokemonRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PokemonRepositoryImpl @Inject constructor(
@@ -44,10 +45,8 @@ class PokemonRepositoryImpl @Inject constructor(
     override suspend fun isPokemonExists(id: Int): Boolean = pokemonLocalDataSource.isFavoritePokemonExists(id)
 
     override fun getFavoritePokemonList(): Flow<List<PokemonInfo>> {
-        return flow {
-            emit(
-                (pokemonLocalDataSource.getFavoritePokemonList()).toDomain()
-            )
+        return pokemonLocalDataSource.getFavoritePokemonList().map { list ->
+            list.map { it.toDomain() }
         }
     }
 

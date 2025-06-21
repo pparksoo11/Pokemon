@@ -49,9 +49,4 @@ class FavoriteFragment: BaseFragment<FragmentListBinding>(R.layout.fragment_list
 
         pokemonFavoriteViewModel.getFavoritePokemonList()
     }
-
-    // 탭 전환 시 즐겨찾기 리스트를 새로고침
-    fun refreshFavoriteList() {
-        pokemonFavoriteViewModel.getFavoritePokemonList()
-    }
 }

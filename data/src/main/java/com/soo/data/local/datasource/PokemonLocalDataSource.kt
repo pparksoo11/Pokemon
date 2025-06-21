@@ -10,7 +10,7 @@ interface PokemonLocalDataSource {
 
     suspend fun isFavoritePokemonExists(id: Int): Boolean
 
-    suspend fun getFavoritePokemonList(): List<PokemonEntity>
+    fun getFavoritePokemonList(): Flow<List<PokemonEntity>>
 
     suspend fun getFavoritePokemonIds(): Flow<List<Int>>
 
