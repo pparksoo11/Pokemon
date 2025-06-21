@@ -3,6 +3,7 @@ package com.soo.presentation.activity
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -67,6 +68,7 @@ class PokemonInfoActivity : BaseActivity<ActivityPokemonInfoBinding>(R.layout.ac
 
                         if(isFavorite) {
                             binding.btnFavorite.text = "X 즐겨찾기 삭제"
+                            binding.btnFavorite.setBackgroundColor(ContextCompat.getColor(this@PokemonInfoActivity, R.color.red_500))
                             binding.btnFavorite.setOnClickListener {
                                 pokemonInfoViewModel.deleteFavoritePokemon(info.id)
                             }

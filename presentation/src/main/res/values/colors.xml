@@ -14,4 +14,6 @@
     <color name="light_gray">#F0F0F0</color>
     <color name="blue">#0000ff</color>
     <color name="crowd_flower">#a6e86c</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="red_500">#F44336</color>
 </resources>
