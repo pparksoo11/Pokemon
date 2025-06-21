@@ -36,4 +36,8 @@ interface PokemonDao {
     // 즐겨찾기에 있는 포켓몬 ID 목록 조회
     @Query("SELECT id FROM pokemon")
     fun getFavoritePokemonIds(): Flow<List<Int>>
+
+    // 즐겨찾기에서 특정 포켓몬 id 제거
+    @Query("DELETE FROM pokemon WHERE id = :id")
+    suspend fun deletePokemon(id: Int): Int
 }

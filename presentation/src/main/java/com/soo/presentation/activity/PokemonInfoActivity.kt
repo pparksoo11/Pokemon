@@ -68,7 +68,7 @@ class PokemonInfoActivity : BaseActivity<ActivityPokemonInfoBinding>(R.layout.ac
                         if(isFavorite) {
                             binding.btnFavorite.text = "X 즐겨찾기 삭제"
                             binding.btnFavorite.setOnClickListener {
-                                //TODO delete
+                                pokemonInfoViewModel.deleteFavoritePokemon(info.id)
                             }
                         } else {
                             binding.btnFavorite.setOnClickListener {

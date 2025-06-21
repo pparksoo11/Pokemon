@@ -2,7 +2,7 @@ package com.soo.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.soo.domain.model.FavoritePokemonInsertResult
-import com.soo.domain.model.PokemonInfo
+import com.soo.domain.usecase.DeleteFavoritePokemonUseCase
 import com.soo.domain.usecase.GetFavoritePokemonUseCase
 import com.soo.domain.usecase.GetPokemonInfoUseCase
 import com.soo.domain.usecase.InsertFavoritePokemonUseCase
@@ -13,7 +13,6 @@ import com.soo.presentation.model.PokemonInfoUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +20,8 @@ import javax.inject.Inject
 class PokemonInfoViewModel @Inject constructor(
     private val getPokemonInfoUseCase: GetPokemonInfoUseCase,
     private val insertFavoritePokemonUseCase: InsertFavoritePokemonUseCase,
-    private val getFavoritePokemonUseCase: GetFavoritePokemonUseCase
+    private val getFavoritePokemonUseCase: GetFavoritePokemonUseCase,
+    private val deleteFavoritePokemonUseCase: DeleteFavoritePokemonUseCase
 ): BaseViewModel() {
 
     private val _pokemonInfo = MutableStateFlow<PokemonInfoUiModel?>(null)
@@ -46,5 +46,14 @@ class PokemonInfoViewModel @Inject constructor(
     fun getFavoritePokemon(id: Int) = viewModelScope.launch {
         val result = getFavoritePokemonUseCase(id)
         _pokemonInfo.value = result?.toDetailUiModel()
+    }
+
+    fun deleteFavoritePokemon(id: Int) = viewModelScope.launch {
+        val isDeleted = deleteFavoritePokemonUseCase(id)
+        if (isDeleted) {
+            showToast("삭제 성공")
+        } else {
+            showToast("존재하지 않는 데이터")
+        }
     }
 }

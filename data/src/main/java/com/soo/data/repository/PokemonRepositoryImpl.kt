@@ -58,4 +58,8 @@ class PokemonRepositoryImpl @Inject constructor(
     override suspend fun getFavoritePokemon(id: Int): PokemonInfo? {
         return pokemonLocalDataSource.getFavoritePokemon(id)?.toDomain()
     }
+
+    override suspend fun deleteFavoritePokemon(id: Int): Boolean {
+        return pokemonLocalDataSource.deleteFavoritePokemon(id) > 0
+    }
 }
