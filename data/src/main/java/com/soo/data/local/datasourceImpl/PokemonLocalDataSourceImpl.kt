@@ -24,4 +24,8 @@ class PokemonLocalDataSourceImpl @Inject constructor(
     override suspend fun getFavoritePokemonIds(): Flow<List<Int>> {
         return pokemonDao.getFavoritePokemonIds()
     }
+
+    override suspend fun getFavoritePokemon(id: Int): PokemonEntity? {
+        return pokemonDao.getFavoritePokemon(id)
+    }
 }

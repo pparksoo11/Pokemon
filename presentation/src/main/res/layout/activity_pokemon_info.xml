@@ -166,7 +166,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnAddFavorite"
+            android:id="@+id/btnFavorite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="+ 즐겨찾기 추가"

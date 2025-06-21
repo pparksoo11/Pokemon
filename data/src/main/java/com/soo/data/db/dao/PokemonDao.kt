@@ -25,12 +25,15 @@ interface PokemonDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertFavoritePokemon(pokemon: PokemonEntity): Long
 
+    // 즐겨찾기에 추가된 포켓몬 개수 조회
     @Query("SELECT COUNT(*) FROM pokemon")
     suspend fun getFavoritePokemonCount(): Int
 
+    // 포켓몬이 즐겨찾기에 있는지 여부 조회
     @Query("SELECT EXISTS(SELECT 1 FROM pokemon WHERE id = :id)")
     suspend fun isFavoritePokemonExists(id: Int): Boolean
 
+    // 즐겨찾기에 있는 포켓몬 ID 목록 조회
     @Query("SELECT id FROM pokemon")
     fun getFavoritePokemonIds(): Flow<List<Int>>
 }

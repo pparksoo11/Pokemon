@@ -71,3 +71,17 @@ fun List<PokemonEntity>.toDomain(): List<PokemonInfo> {
         )
     }
 }
+
+fun PokemonEntity.toDomain(): PokemonInfo {
+    return PokemonInfo(
+        id = this.id,
+        name = this.name,
+        weight = this.weight,
+        height = this.height,
+        types = this.types.map { typeEntity ->
+            PokemonType(
+                name = typeEntity.name,
+            )
+        }
+    )
+}

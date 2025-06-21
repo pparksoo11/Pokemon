@@ -20,9 +20,18 @@ import kotlinx.coroutines.launch
 class PokemonInfoActivity : BaseActivity<ActivityPokemonInfoBinding>(R.layout.activity_pokemon_info) {
 
     private val pokemonInfoViewModel by viewModels<PokemonInfoViewModel>()
+    private var isFavorite: Boolean = false
 
     override fun initView() {
-        pokemonInfoViewModel.getPokemonInfo(name = intent.getStringExtra("pokemonName") ?: "")
+         isFavorite = intent.getBooleanExtra("isFavorite", false)
+
+        if(isFavorite) {
+            val id = intent.getIntExtra("pokemonId", -1)
+            pokemonInfoViewModel.getFavoritePokemon(id)
+        } else {
+            val name = intent.getStringExtra("pokemonName") ?: ""
+            pokemonInfoViewModel.getPokemonInfo(name)
+        }
     }
 
     override fun observeViewModel() {
@@ -56,9 +65,15 @@ class PokemonInfoActivity : BaseActivity<ActivityPokemonInfoBinding>(R.layout.ac
                             binding.typeContainer.addView(tvType)
                         }
 
-                        binding.btnAddFavorite.setOnClickListener {
-                            pokemonInfoViewModel.insertFavoritePokemon(info)
-                            setResult(RESULT_OK)
+                        if(isFavorite) {
+                            binding.btnFavorite.text = "X 즐겨찾기 삭제"
+                            binding.btnFavorite.setOnClickListener {
+                                //TODO delete
+                            }
+                        } else {
+                            binding.btnFavorite.setOnClickListener {
+                                pokemonInfoViewModel.insertFavoritePokemon(info)
+                            }
                         }
 
                         binding.executePendingBindings()

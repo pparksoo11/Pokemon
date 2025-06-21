@@ -1,5 +1,6 @@
 package com.soo.presentation.viewholder
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +9,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.soo.presentation.activity.PokemonInfoActivity
 import com.soo.presentation.databinding.ItemPokemonBinding
 import com.soo.presentation.model.PokemonUiModel
 
@@ -48,6 +50,14 @@ class FavoritePokemonViewHolder(private val binding: ItemPokemonBinding): Recycl
                 }
             })
             .into(binding.imgPokemon)
+
+        binding.cardView.setOnClickListener {
+            val intent = Intent(it.context, PokemonInfoActivity::class.java).apply {
+                putExtra("pokemonId", pokemon.id)
+                putExtra("isFavorite", true)
+            }
+            it.context.startActivity(intent)
+        }
 
         binding.executePendingBindings()
     }

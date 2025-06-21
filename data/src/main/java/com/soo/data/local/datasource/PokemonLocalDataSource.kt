@@ -13,4 +13,6 @@ interface PokemonLocalDataSource {
     suspend fun getFavoritePokemonList(): List<PokemonEntity>
 
     suspend fun getFavoritePokemonIds(): Flow<List<Int>>
+
+    suspend fun getFavoritePokemon(id: Int): PokemonEntity?
 }

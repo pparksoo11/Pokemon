@@ -3,6 +3,7 @@ package com.soo.presentation.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.soo.domain.model.FavoritePokemonInsertResult
 import com.soo.domain.model.PokemonInfo
+import com.soo.domain.usecase.GetFavoritePokemonUseCase
 import com.soo.domain.usecase.GetPokemonInfoUseCase
 import com.soo.domain.usecase.InsertFavoritePokemonUseCase
 import com.soo.presentation.base.BaseViewModel
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class PokemonInfoViewModel @Inject constructor(
     private val getPokemonInfoUseCase: GetPokemonInfoUseCase,
-    private val insertFavoritePokemonUseCase: InsertFavoritePokemonUseCase
+    private val insertFavoritePokemonUseCase: InsertFavoritePokemonUseCase,
+    private val getFavoritePokemonUseCase: GetFavoritePokemonUseCase
 ): BaseViewModel() {
 
     private val _pokemonInfo = MutableStateFlow<PokemonInfoUiModel?>(null)
@@ -39,5 +41,10 @@ class PokemonInfoViewModel @Inject constructor(
             is FavoritePokemonInsertResult.OverLimit -> showToast("최대 10마리까지 저장 가능합니다")
             is FavoritePokemonInsertResult.Failure -> showToast("저장 실패")
         }
+    }
+
+    fun getFavoritePokemon(id: Int) = viewModelScope.launch {
+        val result = getFavoritePokemonUseCase(id)
+        _pokemonInfo.value = result?.toDetailUiModel()
     }
 }

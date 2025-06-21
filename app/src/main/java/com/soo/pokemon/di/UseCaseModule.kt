@@ -3,6 +3,7 @@ package com.soo.pokemon.di
 import com.soo.domain.repository.PokemonRepository
 import com.soo.domain.usecase.GetFavoritePokemonIdsUseCase
 import com.soo.domain.usecase.GetFavoritePokemonListUseCase
+import com.soo.domain.usecase.GetFavoritePokemonUseCase
 import com.soo.domain.usecase.GetPokemonInfoUseCase
 import com.soo.domain.usecase.GetPokemonListUseCase
 import com.soo.domain.usecase.InsertFavoritePokemonUseCase
@@ -48,5 +49,12 @@ object UseCaseModule {
         repository: PokemonRepository
     ): GetFavoritePokemonIdsUseCase {
         return GetFavoritePokemonIdsUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetFavoritePokemonUseCase(
+        repository: PokemonRepository
+    ): GetFavoritePokemonUseCase {
+        return GetFavoritePokemonUseCase(repository)
     }
 }

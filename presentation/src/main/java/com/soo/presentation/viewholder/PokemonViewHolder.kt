@@ -56,6 +56,7 @@ class PokemonViewHolder(private val binding: ItemPokemonBinding): RecyclerView.V
         binding.cardView.setOnClickListener {
             val intent = Intent(it.context, PokemonInfoActivity::class.java).apply {
                 putExtra("pokemonName", pokemon.name)
+                putExtra("isFavorite", false)
             }
             it.context.startActivity(intent)
         }
