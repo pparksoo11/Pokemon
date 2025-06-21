@@ -10,7 +10,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.soo.presentation.activity.PokemonDetailActivity
+import com.soo.presentation.activity.PokemonInfoActivity
 import com.soo.presentation.databinding.ItemPokemonBinding
 import com.soo.presentation.model.PokemonUiModel
 
@@ -54,7 +54,7 @@ class PokemonViewHolder(private val binding: ItemPokemonBinding): RecyclerView.V
             .into(binding.imgPokemon)
 
         binding.cardView.setOnClickListener {
-            val intent = Intent(it.context, PokemonDetailActivity::class.java).apply {
+            val intent = Intent(it.context, PokemonInfoActivity::class.java).apply {
                 putExtra("pokemonName", pokemon.name)
             }
             it.context.startActivity(intent)

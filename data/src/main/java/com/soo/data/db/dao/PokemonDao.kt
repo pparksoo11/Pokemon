@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.soo.data.db.entity.PokemonEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PokemonDao {
@@ -31,5 +32,5 @@ interface PokemonDao {
     suspend fun isFavoritePokemonExists(id: Int): Boolean
 
     @Query("SELECT id FROM pokemon")
-    suspend fun getFavoritePokemonIds(): List<Int>
+    fun getFavoritePokemonIds(): Flow<List<Int>>
 }

@@ -12,7 +12,7 @@ import com.soo.presentation.model.PokemonUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,13 +25,16 @@ class PokemonListViewModel @Inject constructor(
     private val _pokemonList = MutableStateFlow<PagingData<PokemonUiModel>>(PagingData.empty())
     val pokemonList: StateFlow<PagingData<PokemonUiModel>> = _pokemonList
 
+    private val cachedPagingFlow = getPokemonListUseCase().cachedIn(viewModelScope)
+
     fun getPokemonList() = viewModelScope.launch {
-        val favoriteIds = getFavoritePokemonIdsUseCase()
-
-        getPokemonListUseCase()
-            .map { pagingData -> pagingData.map { it.toListUiModel(favoriteIds) } }
-            .cachedIn(viewModelScope)
-            .collect { _pokemonList.value = it }
+        combine(
+            cachedPagingFlow,
+            getFavoritePokemonIdsUseCase()
+        ) { pagingData, favoriteIds ->
+            pagingData.map { it.toListUiModel(favoriteIds) }
+        }.collect {
+            _pokemonList.value = it
+        }
     }
-
 }

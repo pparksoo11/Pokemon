@@ -18,5 +18,5 @@ interface PokemonRepository {
 
     fun getFavoritePokemonList(): Flow<List<PokemonInfo>>
 
-    suspend fun getFavoritePokemonIds(): List<Int>
+    suspend fun getFavoritePokemonIds(): Flow<List<Int>>
 }

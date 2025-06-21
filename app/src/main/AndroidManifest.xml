@@ -27,7 +27,7 @@
         </activity>
 
         <activity
-            android:name="com.soo.presentation.activity.PokemonDetailActivity"
+            android:name="com.soo.presentation.activity.PokemonInfoActivity"
             android:exported="false"
             android:label="Detail"
             />

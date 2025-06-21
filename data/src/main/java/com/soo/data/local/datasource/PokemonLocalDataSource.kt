@@ -1,6 +1,7 @@
 package com.soo.data.local.datasource
 
 import com.soo.data.db.entity.PokemonEntity
+import kotlinx.coroutines.flow.Flow
 
 interface PokemonLocalDataSource {
     suspend fun insertFavoritePokemon(pokemonEntity: PokemonEntity): Long
@@ -11,5 +12,5 @@ interface PokemonLocalDataSource {
 
     suspend fun getFavoritePokemonList(): List<PokemonEntity>
 
-    suspend fun getFavoritePokemonIds(): List<Int>
+    suspend fun getFavoritePokemonIds(): Flow<List<Int>>
 }

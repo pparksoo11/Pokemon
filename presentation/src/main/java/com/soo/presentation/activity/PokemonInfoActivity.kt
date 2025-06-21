@@ -1,11 +1,8 @@
 package com.soo.presentation.activity
 
-import android.util.Log
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.view.marginEnd
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -14,14 +11,13 @@ import com.google.android.flexbox.FlexboxLayout
 import com.soo.presentation.R
 import com.soo.presentation.base.BaseActivity
 import com.soo.presentation.base.BaseViewModel
-import com.soo.presentation.databinding.ActivityPokemonDetailBinding
+import com.soo.presentation.databinding.ActivityPokemonInfoBinding
 import com.soo.presentation.viewmodel.PokemonInfoViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PokemonDetailActivity : BaseActivity<ActivityPokemonDetailBinding>(R.layout.activity_pokemon_detail) {
+class PokemonInfoActivity : BaseActivity<ActivityPokemonInfoBinding>(R.layout.activity_pokemon_info) {
 
     private val pokemonInfoViewModel by viewModels<PokemonInfoViewModel>()
 
@@ -38,11 +34,11 @@ class PokemonDetailActivity : BaseActivity<ActivityPokemonDetailBinding>(R.layou
                     info?.let {
                         binding.pokemonInfo = info
 
-                        Glide.with(this@PokemonDetailActivity).load(info.imageUrl).into(binding.imgPokemon)
+                        Glide.with(this@PokemonInfoActivity).load(info.imageUrl).into(binding.imgPokemon)
 
                         // TODO type에 따라 배경 다르게 구현하려면 추가 구현 필요
                         info.types.forEach { type ->
-                            val tvType = TextView(this@PokemonDetailActivity).apply {
+                            val tvType = TextView(this@PokemonInfoActivity).apply {
                                 text = type
                                 setPadding(30, 10, 30, 10)
                                 
@@ -62,6 +58,7 @@ class PokemonDetailActivity : BaseActivity<ActivityPokemonDetailBinding>(R.layou
 
                         binding.btnAddFavorite.setOnClickListener {
                             pokemonInfoViewModel.insertFavoritePokemon(info)
+                            setResult(RESULT_OK)
                         }
 
                         binding.executePendingBindings()
@@ -75,7 +72,7 @@ class PokemonDetailActivity : BaseActivity<ActivityPokemonDetailBinding>(R.layou
                 pokemonInfoViewModel.uiEvent.collect { event ->
                     when(event) {
                         is BaseViewModel.UiEvent.ShowToast -> {
-                            Toast.makeText(this@PokemonDetailActivity, event.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@PokemonInfoActivity, event.message, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

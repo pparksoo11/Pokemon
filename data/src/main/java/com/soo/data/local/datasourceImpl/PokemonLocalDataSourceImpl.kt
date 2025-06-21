@@ -3,6 +3,7 @@ package com.soo.data.local.datasourceImpl
 import com.soo.data.db.dao.PokemonDao
 import com.soo.data.db.entity.PokemonEntity
 import com.soo.data.local.datasource.PokemonLocalDataSource
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PokemonLocalDataSourceImpl @Inject constructor(
@@ -20,7 +21,7 @@ class PokemonLocalDataSourceImpl @Inject constructor(
         return pokemonDao.getFavoritePokemonList()
     }
 
-    override suspend fun getFavoritePokemonIds(): List<Int> {
+    override suspend fun getFavoritePokemonIds(): Flow<List<Int>> {
         return pokemonDao.getFavoritePokemonIds()
     }
 }

@@ -5,6 +5,7 @@ import com.soo.presentation.R
 import com.soo.presentation.adapter.MainPagerAdapter
 import com.soo.presentation.base.BaseActivity
 import com.soo.presentation.databinding.ActivityMainBinding
+import com.soo.presentation.fragment.FavoriteFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +38,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 super.onPageSelected(position)
                 when (position) {
                     0 -> binding.navigation.selectedItemId = R.id.listFragment
-                    1 -> binding.navigation.selectedItemId = R.id.favoriteFragment
+                    1 -> {
+                        binding.navigation.selectedItemId = R.id.favoriteFragment
+
+                        val fragment = supportFragmentManager.findFragmentByTag("f1")
+                        (fragment as? FavoriteFragment)?.refreshFavoriteList()
+                    }
                 }
             }
         })
