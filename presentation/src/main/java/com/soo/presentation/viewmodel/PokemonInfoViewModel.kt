@@ -1,7 +1,7 @@
 package com.soo.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.soo.domain.model.FavoritePokemonInsertResult
 import com.soo.domain.model.PokemonInfo
 import com.soo.domain.usecase.GetPokemonInfoUseCase
 import com.soo.domain.usecase.InsertFavoritePokemonUseCase
@@ -28,7 +28,11 @@ class PokemonInfoViewModel @Inject constructor(
     }
 
     fun insertFavoritePokemon(pokemonInfo: PokemonInfo) = viewModelScope.launch {
-        insertFavoritePokemonUseCase(pokemonInfo)
-        showToast("저장 성공")
+        when(insertFavoritePokemonUseCase(pokemonInfo)) {
+            is FavoritePokemonInsertResult.Success -> showToast("저장 성공")
+            is FavoritePokemonInsertResult.AlreadyExists -> showToast("이미 저장된 포켓몬입니다")
+            is FavoritePokemonInsertResult.OverLimit -> showToast("최대 10마리까지 저장 가능합니다")
+            is FavoritePokemonInsertResult.Failure -> showToast("저장 실패")
+        }
     }
 }

@@ -10,5 +10,9 @@ interface PokemonRepository {
 
     fun getPokemonInfo(name: String): Flow<PokemonInfo>
 
-    suspend fun insertFavoritePokemon(pokemon: PokemonInfo)
+    suspend fun insertFavoritePokemon(pokemon: PokemonInfo): Long
+
+    suspend fun getFavoritePokemonCount(): Int
+
+    suspend fun isPokemonExists(id: Int): Boolean
 }

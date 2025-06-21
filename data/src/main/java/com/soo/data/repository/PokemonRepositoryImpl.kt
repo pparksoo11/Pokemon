@@ -35,7 +35,11 @@ class PokemonRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun insertFavoritePokemon(pokemon: PokemonInfo) {
-        pokemonLocalDataSource.insertFavoritePokemon(pokemon.toEntity())
+    override suspend fun insertFavoritePokemon(pokemon: PokemonInfo): Long {
+        return pokemonLocalDataSource.insertFavoritePokemon(pokemon.toEntity())
     }
+
+    override suspend fun getFavoritePokemonCount(): Int = pokemonLocalDataSource.getFavoritePokemonCount()
+
+    override suspend fun isPokemonExists(id: Int): Boolean = pokemonLocalDataSource.isFavoritePokemonExists(id)
 }

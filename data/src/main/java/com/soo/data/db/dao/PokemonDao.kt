@@ -21,6 +21,12 @@ interface PokemonDao {
     suspend fun getPokemonWithTypes(id: Int): PokemonEntity?
 
     // 포켓몬 정보 저장
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavoritePokemon(pokemon: PokemonEntity)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertFavoritePokemon(pokemon: PokemonEntity): Long
+
+    @Query("SELECT COUNT(*) FROM pokemon")
+    suspend fun getFavoritePokemonCount(): Int
+
+    @Query("SELECT EXISTS(SELECT 1 FROM pokemon WHERE id = :id)")
+    suspend fun isFavoritePokemonExists(id: Int): Boolean
 }
