@@ -4,25 +4,34 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.soo.domain.model.Pokemon
+import androidx.paging.map
+import com.soo.domain.usecase.GetFavoritePokemonIdsUseCase
 import com.soo.domain.usecase.GetPokemonListUseCase
+import com.soo.presentation.mapper.toListUiModel
+import com.soo.presentation.model.PokemonUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(
-    private val getPokemonListUseCase: GetPokemonListUseCase
-): ViewModel() {
+    private val getPokemonListUseCase: GetPokemonListUseCase,
+    private val getFavoritePokemonIdsUseCase: GetFavoritePokemonIdsUseCase
+) : ViewModel() {
 
-    private val _pokemonList = MutableStateFlow<PagingData<Pokemon>>(PagingData.empty())
-    val pokemonList: StateFlow<PagingData<Pokemon>> = _pokemonList
+    private val _pokemonList = MutableStateFlow<PagingData<PokemonUiModel>>(PagingData.empty())
+    val pokemonList: StateFlow<PagingData<PokemonUiModel>> = _pokemonList
 
     fun getPokemonList() = viewModelScope.launch {
-        getPokemonListUseCase().cachedIn(viewModelScope).collect {
-            _pokemonList.value = it
-        }
+        val favoriteIds = getFavoritePokemonIdsUseCase()
+
+        getPokemonListUseCase()
+            .map { pagingData -> pagingData.map { it.toListUiModel(favoriteIds) } }
+            .cachedIn(viewModelScope)
+            .collect { _pokemonList.value = it }
     }
+
 }

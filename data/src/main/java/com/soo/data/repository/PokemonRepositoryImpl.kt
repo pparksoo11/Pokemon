@@ -42,4 +42,16 @@ class PokemonRepositoryImpl @Inject constructor(
     override suspend fun getFavoritePokemonCount(): Int = pokemonLocalDataSource.getFavoritePokemonCount()
 
     override suspend fun isPokemonExists(id: Int): Boolean = pokemonLocalDataSource.isFavoritePokemonExists(id)
+
+    override fun getFavoritePokemonList(): Flow<List<PokemonInfo>> {
+        return flow {
+            emit(
+                (pokemonLocalDataSource.getFavoritePokemonList()).toDomain()
+            )
+        }
+    }
+
+    override suspend fun getFavoritePokemonIds(): List<Int> {
+        return pokemonLocalDataSource.getFavoritePokemonIds()
+    }
 }

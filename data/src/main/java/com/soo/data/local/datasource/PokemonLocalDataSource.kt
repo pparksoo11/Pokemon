@@ -8,4 +8,8 @@ interface PokemonLocalDataSource {
     suspend fun getFavoritePokemonCount(): Int
 
     suspend fun isFavoritePokemonExists(id: Int): Boolean
+
+    suspend fun getFavoritePokemonList(): List<PokemonEntity>
+
+    suspend fun getFavoritePokemonIds(): List<Int>
 }

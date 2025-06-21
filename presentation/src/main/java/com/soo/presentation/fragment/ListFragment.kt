@@ -27,6 +27,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(R.layout.fragment_list) {
     private lateinit var pokemonLoadStateAdapter: PokemonLoadStateAdapter
 
     override fun initView() {
+        requireActivity().title = "List"
         setupPokemonList()
     }
 
@@ -48,7 +49,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(R.layout.fragment_list) {
         pokemonLoadStateAdapter = PokemonLoadStateAdapter()
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-                binding.pokemonList.layoutManager = gridLayoutManager
+        binding.pokemonList.layoutManager = gridLayoutManager
 
         binding.pokemonList.adapter = pokemonListAdapter
 

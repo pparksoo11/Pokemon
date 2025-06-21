@@ -15,4 +15,12 @@ class PokemonLocalDataSourceImpl @Inject constructor(
     override suspend fun getFavoritePokemonCount(): Int = pokemonDao.getFavoritePokemonCount()
 
     override suspend fun isFavoritePokemonExists(id: Int): Boolean = pokemonDao.isFavoritePokemonExists(id)
+
+    override suspend fun getFavoritePokemonList(): List<PokemonEntity> {
+        return pokemonDao.getFavoritePokemonList()
+    }
+
+    override suspend fun getFavoritePokemonIds(): List<Int> {
+        return pokemonDao.getFavoritePokemonIds()
+    }
 }

@@ -22,7 +22,6 @@ fun PokemonInfoDto.toDomain(): PokemonInfo {
         pokemonType.type?.let { type ->
             PokemonType(
                 name = type.name.orEmpty(),
-                url = type.url.orEmpty()
             )
         }
     } ?: emptyList()
@@ -43,7 +42,6 @@ fun PokemonInfo.toEntity(): PokemonEntity {
         weight = weight,
         height = height,
         types = types.toEntityList(id),
-        image = getImageUrl(),
     )
 }
 
@@ -56,4 +54,20 @@ fun PokemonType.toEntity(pokemonId: Int): PokemonTypeEntity {
 
 fun List<PokemonType>.toEntityList(pokemonId: Int): List<PokemonTypeEntity> {
     return this.map { it.toEntity(pokemonId) }
+}
+
+fun List<PokemonEntity>.toDomain(): List<PokemonInfo> {
+    return this.map { entity ->
+        PokemonInfo(
+            id = entity.id,
+            name = entity.name,
+            weight = entity.weight,
+            height = entity.height,
+            types = entity.types.map { typeEntity ->
+                PokemonType(
+                    name = typeEntity.name,
+                )
+            }
+        )
+    }
 }

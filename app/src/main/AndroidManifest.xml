@@ -19,7 +19,6 @@
         <activity
             android:name="com.soo.presentation.activity.MainActivity"
             android:exported="true"
-            android:label="List"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

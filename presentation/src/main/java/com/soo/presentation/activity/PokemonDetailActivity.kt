@@ -38,12 +38,12 @@ class PokemonDetailActivity : BaseActivity<ActivityPokemonDetailBinding>(R.layou
                     info?.let {
                         binding.pokemonInfo = info
 
-                        Glide.with(this@PokemonDetailActivity).load(info.getImageUrl()).into(binding.imgPokemon)
+                        Glide.with(this@PokemonDetailActivity).load(info.imageUrl).into(binding.imgPokemon)
 
                         // TODO type에 따라 배경 다르게 구현하려면 추가 구현 필요
                         info.types.forEach { type ->
                             val tvType = TextView(this@PokemonDetailActivity).apply {
-                                text = type.name
+                                text = type
                                 setPadding(30, 10, 30, 10)
                                 
                                 val layoutParams = FlexboxLayout.LayoutParams(

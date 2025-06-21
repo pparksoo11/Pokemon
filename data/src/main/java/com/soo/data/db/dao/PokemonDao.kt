@@ -13,12 +13,12 @@ interface PokemonDao {
     // 전체 포켓몬 정보와 타입 조회
     @Transaction
     @Query("SELECT * FROM pokemon")
-    suspend fun getAllPokemonWithTypes(): List<PokemonEntity>
+    suspend fun getFavoritePokemonList(): List<PokemonEntity>
 
     // 특정 포켓몬 조회
     @Transaction
     @Query("SELECT * FROM pokemon WHERE id = :id")
-    suspend fun getPokemonWithTypes(id: Int): PokemonEntity?
+    suspend fun getFavoritePokemon(id: Int): PokemonEntity?
 
     // 포켓몬 정보 저장
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -29,4 +29,7 @@ interface PokemonDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM pokemon WHERE id = :id)")
     suspend fun isFavoritePokemonExists(id: Int): Boolean
+
+    @Query("SELECT id FROM pokemon")
+    suspend fun getFavoritePokemonIds(): List<Int>
 }

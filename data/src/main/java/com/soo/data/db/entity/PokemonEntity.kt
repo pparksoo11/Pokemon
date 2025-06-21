@@ -9,6 +9,5 @@ data class PokemonEntity(
     val name: String,
     val weight: Int,
     val height: Int,
-    val image: String,
     val types: List<PokemonTypeEntity>,
 )

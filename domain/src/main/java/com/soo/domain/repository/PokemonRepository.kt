@@ -15,4 +15,8 @@ interface PokemonRepository {
     suspend fun getFavoritePokemonCount(): Int
 
     suspend fun isPokemonExists(id: Int): Boolean
+
+    fun getFavoritePokemonList(): Flow<List<PokemonInfo>>
+
+    suspend fun getFavoritePokemonIds(): List<Int>
 }

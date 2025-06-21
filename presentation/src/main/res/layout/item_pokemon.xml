@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="pokemon"
-            type="com.soo.domain.model.Pokemon" />
+            type="com.soo.presentation.model.PokemonUiModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -71,7 +72,9 @@
                 android:layout_height="20dp"
                 android:src="@drawable/favorite"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="@{pokemon.isFavorite ? View.VISIBLE : View.GONE}"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
