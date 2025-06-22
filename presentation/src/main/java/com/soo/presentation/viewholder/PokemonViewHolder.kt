@@ -15,7 +15,7 @@ import com.soo.presentation.databinding.ItemPokemonBinding
 import com.soo.presentation.model.PokemonUiModel
 
 class PokemonViewHolder(private val binding: ItemPokemonBinding): RecyclerView.ViewHolder(binding.root) {
-    fun bind(pokemon: PokemonUiModel) {
+    fun bind(pokemon: PokemonUiModel, isFavorite: Boolean) {
         binding.pokemon = pokemon
         binding.progressBar.visibility = View.VISIBLE
         binding.tvError.visibility = View.GONE
@@ -55,8 +55,12 @@ class PokemonViewHolder(private val binding: ItemPokemonBinding): RecyclerView.V
 
         binding.cardView.setOnClickListener {
             val intent = Intent(it.context, PokemonInfoActivity::class.java).apply {
-                putExtra("pokemonName", pokemon.name)
-                putExtra("isFavorite", false)
+                putExtra("isFavorite", isFavorite)
+                if (isFavorite) {
+                    putExtra("pokemonId", pokemon.id)
+                } else {
+                    putExtra("pokemonName", pokemon.name)
+                }
             }
             it.context.startActivity(intent)
         }

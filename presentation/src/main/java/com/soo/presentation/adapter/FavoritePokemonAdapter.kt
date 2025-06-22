@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.soo.presentation.databinding.ItemPokemonBinding
 import com.soo.presentation.model.PokemonUiModel
-import com.soo.presentation.viewholder.FavoritePokemonViewHolder
+import com.soo.presentation.viewholder.PokemonViewHolder
 
-class FavoritePokemonAdapter: ListAdapter<PokemonUiModel, FavoritePokemonViewHolder>(diffCallback) {
+class FavoritePokemonAdapter: ListAdapter<PokemonUiModel, PokemonViewHolder>(diffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritePokemonViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
         val binding = ItemPokemonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return FavoritePokemonViewHolder(binding)
+        return PokemonViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: FavoritePokemonViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
+        holder.bind(getItem(position), isFavorite = true)
     }
 
     companion object {

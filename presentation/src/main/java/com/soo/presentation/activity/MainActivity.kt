@@ -9,9 +9,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-
-    private lateinit var pagerAdapter: MainPagerAdapter
-
     override fun initView() {
         setupNavigation()
     }

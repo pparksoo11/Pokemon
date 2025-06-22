@@ -18,7 +18,7 @@ class PokemonListAdapter: PagingDataAdapter<PokemonUiModel, PokemonViewHolder>(D
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         val item = getItem(position) ?: return
 
-        holder.bind(item)
+        holder.bind(item, isFavorite = false)
     }
 
     companion object {

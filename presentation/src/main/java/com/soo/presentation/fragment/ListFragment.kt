@@ -10,7 +10,6 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.soo.presentation.R
 import com.soo.presentation.adapter.PokemonListAdapter
-import com.soo.presentation.adapter.PokemonLoadStateAdapter
 import com.soo.presentation.base.BaseFragment
 import com.soo.presentation.databinding.FragmentListBinding
 import com.soo.presentation.viewmodel.PokemonListViewModel
@@ -25,7 +24,6 @@ class ListFragment : BaseFragment<FragmentListBinding>(R.layout.fragment_list) {
     private val pokemonListViewModel by viewModels<PokemonListViewModel>()
 
     private lateinit var pokemonListAdapter: PokemonListAdapter
-    private lateinit var pokemonLoadStateAdapter: PokemonLoadStateAdapter
 
     override fun initView() {
         requireActivity().title = "List"
@@ -47,7 +45,6 @@ class ListFragment : BaseFragment<FragmentListBinding>(R.layout.fragment_list) {
      * */
     private fun setupPokemonList() {
         pokemonListAdapter = PokemonListAdapter()
-        pokemonLoadStateAdapter = PokemonLoadStateAdapter()
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
         binding.pokemonList.layoutManager = gridLayoutManager
@@ -77,11 +74,6 @@ class ListFragment : BaseFragment<FragmentListBinding>(R.layout.fragment_list) {
                     else -> ""
                 }
             }
-
-            /*binding.btnRetry.apply {
-                isVisible = hasError
-                setOnClickListener { pokemonListAdapter.retry() }
-            }*/
         }
 
         // 초기 데이터 로딩
