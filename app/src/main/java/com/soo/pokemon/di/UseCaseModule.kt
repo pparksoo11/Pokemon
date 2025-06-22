@@ -13,6 +13,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+//TODO UseCase가 계속 추가될 경우, 도메인 모듈에 Hilt를 도입하여 의존성 주입을 자동화하는 방안 고려
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
