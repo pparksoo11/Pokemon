@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.soo.data.db.entity.PokemonEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -12,14 +11,12 @@ import kotlinx.coroutines.flow.Flow
 interface PokemonDao {
 
     // 전체 포켓몬 정보 조회
-    @Transaction
     @Query("SELECT * FROM pokemon")
     fun getFavoritePokemonList(): Flow<List<PokemonEntity>>
 
     // 특정 포켓몬 조회
-    @Transaction
     @Query("SELECT * FROM pokemon WHERE id = :id")
-    suspend fun getFavoritePokemon(id: Int): PokemonEntity?
+    fun getFavoritePokemon(id: Int): Flow<PokemonEntity?>
 
     // 포켓몬 정보 저장
     @Insert(onConflict = OnConflictStrategy.IGNORE)

@@ -1,5 +1,6 @@
 package com.soo.presentation.activity
 
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -13,6 +14,8 @@ import com.soo.presentation.R
 import com.soo.presentation.base.BaseActivity
 import com.soo.presentation.base.BaseViewModel
 import com.soo.presentation.databinding.ActivityPokemonInfoBinding
+import com.soo.presentation.model.PokemonInfoUiModel
+import com.soo.presentation.state.UiState
 import com.soo.presentation.viewmodel.PokemonInfoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -24,7 +27,14 @@ class PokemonInfoActivity : BaseActivity<ActivityPokemonInfoBinding>(R.layout.ac
     private var isFavorite: Boolean = false
 
     override fun initView() {
-         isFavorite = intent.getBooleanExtra("isFavorite", false)
+         initPokemonInfo()
+    }
+
+    /**
+     * isFavorite이 true인 경우 즐겨찾기 > Info / false인 경우 리스트 > Info
+     * */
+    private fun initPokemonInfo() {
+        isFavorite = intent.getBooleanExtra("isFavorite", false)
 
         if(isFavorite) {
             val id = intent.getIntExtra("pokemonId", -1)
@@ -40,45 +50,17 @@ class PokemonInfoActivity : BaseActivity<ActivityPokemonInfoBinding>(R.layout.ac
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                pokemonInfoViewModel.pokemonInfo.collect { info ->
-                    info?.let {
-                        binding.pokemonInfo = info
-
-                        Glide.with(this@PokemonInfoActivity).load(info.imageUrl).into(binding.imgPokemon)
-
-                        // TODO type에 따라 배경 다르게 구현하려면 추가 구현 필요
-                        info.types.forEach { type ->
-                            val tvType = TextView(this@PokemonInfoActivity).apply {
-                                text = type
-                                setPadding(30, 10, 30, 10)
-                                
-                                val layoutParams = FlexboxLayout.LayoutParams(
-                                    FlexboxLayout.LayoutParams.WRAP_CONTENT,
-                                    FlexboxLayout.LayoutParams.WRAP_CONTENT
-                                ).apply {
-                                    setMargins(0, 0, 10, 0) // 왼쪽, 위, 오른쪽, 아래 마진
-                                }
-                                this.layoutParams = layoutParams
-                                setBackgroundResource(R.drawable.bg_type_chip)
-                                textSize = 16f
-                                setTextColor(resources.getColor(R.color.black, null))
-                            }
-                            binding.typeContainer.addView(tvType)
+                pokemonInfoViewModel.pokemonInfoState.collect { state ->
+                    when(state) {
+                        is UiState.Loading -> {
+                            showLoading()
                         }
-
-                        if(isFavorite) {
-                            binding.btnFavorite.text = "X 즐겨찾기 삭제"
-                            binding.btnFavorite.setBackgroundColor(ContextCompat.getColor(this@PokemonInfoActivity, R.color.red_500))
-                            binding.btnFavorite.setOnClickListener {
-                                pokemonInfoViewModel.deleteFavoritePokemon(info.id)
-                            }
-                        } else {
-                            binding.btnFavorite.setOnClickListener {
-                                pokemonInfoViewModel.insertFavoritePokemon(info)
-                            }
+                        is UiState.Success -> {
+                            renderPokemonInfo(state.data)
                         }
-
-                        binding.executePendingBindings()
+                        is UiState.Error -> {
+                            showError()
+                        }
                     }
                 }
             }
@@ -93,6 +75,76 @@ class PokemonInfoActivity : BaseActivity<ActivityPokemonInfoBinding>(R.layout.ac
                         }
                     }
                 }
+            }
+        }
+    }
+
+    // 로딩 화면 표시
+    private fun showLoading() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.overlayLayout.visibility = View.VISIBLE
+        binding.tvError.visibility = View.GONE
+    }
+
+    // 에러 화면 표시
+    private fun showError() {
+        binding.progressBar.visibility = View.GONE
+        binding.overlayLayout.visibility = View.GONE
+        binding.tvError.visibility = View.VISIBLE
+    }
+
+    // 포켓몬 정보 UI 표시
+    private fun renderPokemonInfo(info: PokemonInfoUiModel) {
+        binding.progressBar.visibility = View.GONE
+        binding.overlayLayout.visibility = View.GONE
+        binding.tvError.visibility = View.GONE
+
+        binding.pokemonInfo = info
+        Glide.with(this).load(info.imageUrl).into(binding.imgPokemon)
+
+        renderTypeChips(info.types)
+        setupFavoriteButton(info)
+        binding.executePendingBindings()
+    }
+
+    // 타입 UI 추가
+    private fun renderTypeChips(types: List<String>) {
+        binding.typeContainer.removeAllViews() // 중복 방지
+        types.forEach { type ->
+            val chip = TextView(this).apply {
+                text = type
+                setPadding(30, 10, 30, 10)
+                layoutParams = FlexboxLayout.LayoutParams(
+                    FlexboxLayout.LayoutParams.WRAP_CONTENT,
+                    FlexboxLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(0, 0, 10, 0)
+                }
+                setBackgroundResource(R.drawable.bg_type_chip)
+                textSize = 16f
+                setTextColor(resources.getColor(R.color.black, null))
+            }
+            binding.typeContainer.addView(chip)
+        }
+    }
+
+    /**
+     * 즐겨찾기 버튼 UI 구현
+     * 리스트 화면에서 접근한 경우 즐겨 찾기 추가 버튼 노출
+     * 즐겨찾기 화면에서 접근한 경우 즐겨찾기 삭제 버튼 노출
+     */
+    private fun setupFavoriteButton(info: PokemonInfoUiModel) {
+        if (isFavorite) {
+            binding.btnFavorite.apply {
+                text = "X 즐겨찾기 삭제"
+                setBackgroundColor(ContextCompat.getColor(this@PokemonInfoActivity, R.color.red_500))
+                setOnClickListener { pokemonInfoViewModel.deleteFavoritePokemon(info.id) }
+            }
+        } else {
+            binding.btnFavorite.apply {
+                text = "+ 즐겨찾기 추가"
+                setBackgroundColor(ContextCompat.getColor(this@PokemonInfoActivity, R.color.green_500))
+                setOnClickListener { pokemonInfoViewModel.insertFavoritePokemon(info) }
             }
         }
     }

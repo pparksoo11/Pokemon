@@ -20,7 +20,7 @@ interface PokemonRepository {
 
     suspend fun getFavoritePokemonIds(): Flow<List<Int>>
 
-    suspend fun getFavoritePokemon(id: Int): PokemonInfo?
+    suspend fun getFavoritePokemon(id: Int): Flow<PokemonInfo?>
 
     suspend fun deleteFavoritePokemon(id: Int): Boolean
 }

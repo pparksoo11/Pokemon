@@ -10,10 +10,15 @@ import com.soo.presentation.base.BaseViewModel
 import com.soo.presentation.mapper.toDetailUiModel
 import com.soo.presentation.mapper.toDomain
 import com.soo.presentation.model.PokemonInfoUiModel
+import com.soo.presentation.state.ErrorType
+import com.soo.presentation.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,12 +29,21 @@ class PokemonInfoViewModel @Inject constructor(
     private val deleteFavoritePokemonUseCase: DeleteFavoritePokemonUseCase
 ): BaseViewModel() {
 
-    private val _pokemonInfo = MutableStateFlow<PokemonInfoUiModel?>(null)
-    val pokemonInfo: StateFlow<PokemonInfoUiModel?> = _pokemonInfo
+    private val _pokemonInfoState = MutableStateFlow<UiState<PokemonInfoUiModel>>(UiState.Loading)
+    val pokemonInfoState: StateFlow<UiState<PokemonInfoUiModel>> = _pokemonInfoState
 
     fun getPokemonInfo(name: String) = viewModelScope.launch {
-        getPokemonInfoUseCase(name).collect { ui ->
-            _pokemonInfo.value = ui.toDetailUiModel()
+        getPokemonInfoUseCase(name).onStart {
+            _pokemonInfoState.value = UiState.Loading
+        }.catch { e ->
+            val errorType = when(e) {
+                is IOException -> ErrorType.Network
+                //TODO 다른 에러처리 추가 가능
+                else -> ErrorType.Unknown
+            }
+            _pokemonInfoState.value = UiState.Error(errorType)
+        }.collect {
+            _pokemonInfoState.value = UiState.Success(it.toDetailUiModel())
         }
     }
 
@@ -44,8 +58,22 @@ class PokemonInfoViewModel @Inject constructor(
     }
 
     fun getFavoritePokemon(id: Int) = viewModelScope.launch {
-        val result = getFavoritePokemonUseCase(id)
-        _pokemonInfo.value = result?.toDetailUiModel()
+        getFavoritePokemonUseCase(id).onStart {
+            _pokemonInfoState.value = UiState.Loading
+        }.catch { e ->
+            val errorType = when(e) {
+                is IOException -> ErrorType.Network
+                //TODO 다른 에러처리 추가 가능
+                else -> ErrorType.Unknown
+            }
+            _pokemonInfoState.value = UiState.Error(errorType)
+        }.collect { result ->
+            if (result != null) {
+                _pokemonInfoState.value = UiState.Success(result.toDetailUiModel())
+            } else {
+                _pokemonInfoState.value = UiState.Error(ErrorType.Unknown)
+            }
+        }
     }
 
     fun deleteFavoritePokemon(id: Int) = viewModelScope.launch {
