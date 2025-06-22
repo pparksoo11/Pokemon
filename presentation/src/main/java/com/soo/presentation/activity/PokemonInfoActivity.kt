@@ -1,5 +1,6 @@
 package com.soo.presentation.activity
 
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -27,7 +28,19 @@ class PokemonInfoActivity : BaseActivity<ActivityPokemonInfoBinding>(R.layout.ac
     private var isFavorite: Boolean = false
 
     override fun initView() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // 뒤로가기 버튼 활성화
          initPokemonInfo()
+    }
+
+    // 뒤로가기 버튼 클릭 시 activity finish
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     /**
@@ -37,9 +50,11 @@ class PokemonInfoActivity : BaseActivity<ActivityPokemonInfoBinding>(R.layout.ac
         isFavorite = intent.getBooleanExtra("isFavorite", false)
 
         if(isFavorite) {
+            supportActionBar?.title = "Favorite Detail"
             val id = intent.getIntExtra("pokemonId", -1)
             pokemonInfoViewModel.getFavoritePokemon(id)
         } else {
+            supportActionBar?.title = "Detail"
             val name = intent.getStringExtra("pokemonName") ?: ""
             pokemonInfoViewModel.getPokemonInfo(name)
         }
