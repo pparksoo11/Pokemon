@@ -33,6 +33,8 @@ class PokemonInfoViewModel @Inject constructor(
     private val _pokemonInfoState = MutableStateFlow<UiState<PokemonInfoUiModel>>(UiState.Loading)
     val pokemonInfoState: StateFlow<UiState<PokemonInfoUiModel>> = _pokemonInfoState
 
+    private var cachedPokemon: PokemonInfoUiModel? = null // db에서 삭제 시 화면 유지를 위함
+
     fun getPokemonInfo(name: String) = viewModelScope.launch {
         getPokemonInfoUseCase(name).onStart {
             _pokemonInfoState.value = UiState.Loading
@@ -67,9 +69,16 @@ class PokemonInfoViewModel @Inject constructor(
             _pokemonInfoState.value = UiState.Error(errorType)
         }.collect { result ->
             if (result != null) {
-                _pokemonInfoState.value = UiState.Success(result.toDetailUiModel())
+                val uiModel = result.toDetailUiModel()
+                cachedPokemon = uiModel // 캐시 저장
+                _pokemonInfoState.value = UiState.Success(uiModel)
             } else {
-                _pokemonInfoState.value = UiState.Error(ErrorType.Unknown)
+                // result가 null이지만 캐시가 있다면 데이터 유지(Info 페이지에서 즐겨찾기 삭제 시에도 화면은 유지)
+                cachedPokemon?.let {
+                    _pokemonInfoState.value = UiState.Success(it)
+                } ?: run {
+                    _pokemonInfoState.value = UiState.Error(ErrorType.Unknown)
+                }
             }
         }
     }
