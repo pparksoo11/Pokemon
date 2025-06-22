@@ -56,22 +56,6 @@ fun List<PokemonType>.toEntityList(pokemonId: Int): List<PokemonTypeEntity> {
     return this.map { it.toEntity(pokemonId) }
 }
 
-fun List<PokemonEntity>.toDomain(): List<PokemonInfo> {
-    return this.map { entity ->
-        PokemonInfo(
-            id = entity.id,
-            name = entity.name,
-            weight = entity.weight,
-            height = entity.height,
-            types = entity.types.map { typeEntity ->
-                PokemonType(
-                    name = typeEntity.name,
-                )
-            }
-        )
-    }
-}
-
 fun PokemonEntity.toDomain(): PokemonInfo {
     return PokemonInfo(
         id = this.id,

@@ -45,7 +45,7 @@ fun PokemonInfoUiModel.toDomain(): PokemonInfo {
     )
 }
 
-fun Pokemon.getId(url: String): Int {
+fun getId(url: String): Int {
     return url.trimEnd('/').substringAfterLast('/', "").toIntOrNull() ?: -1
 }
 
