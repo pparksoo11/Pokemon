@@ -1,11 +1,10 @@
 package com.soo.data.remote.datasource
 
-import com.soo.data.common.ApiResult
 import com.soo.data.model.PokemonInfoDto
 import com.soo.data.model.PokemonResponse
 
 interface PokemonDataSource {
-    suspend fun getPokemonList(limit: Int, offset: Int): ApiResult<PokemonResponse>
+    suspend fun getPokemonList(limit: Int, offset: Int): PokemonResponse
 
-    suspend fun getPokemonInfo(name: String): ApiResult<PokemonInfoDto>
+    suspend fun getPokemonInfo(name: String): PokemonInfoDto
 }

@@ -59,7 +59,7 @@ class PokemonInfoActivity : BaseActivity<ActivityPokemonInfoBinding>(R.layout.ac
                             renderPokemonInfo(state.data)
                         }
                         is UiState.Error -> {
-                            showError()
+                            showError(state.type.message ?: "알 수 없는 오류가 발생했습니다.")
                         }
                     }
                 }
@@ -87,10 +87,11 @@ class PokemonInfoActivity : BaseActivity<ActivityPokemonInfoBinding>(R.layout.ac
     }
 
     // 에러 화면 표시
-    private fun showError() {
+    private fun showError(message: String) {
         binding.progressBar.visibility = View.GONE
-        binding.overlayLayout.visibility = View.GONE
+        binding.overlayLayout.visibility = View.VISIBLE
         binding.tvError.visibility = View.VISIBLE
+        binding.tvError.text = message
     }
 
     // 포켓몬 정보 UI 표시

@@ -1,7 +1,6 @@
 package com.soo.data.di
 
-import com.soo.data.common.SafeApiCallAdapterFactory
-import com.soo.data.service.PokemonServcie
+import com.soo.data.service.PokemonService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,13 +44,12 @@ object NetworkModule {
             .baseUrl("https://pokeapi.co/api/v2/")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(SafeApiCallAdapterFactory())
             .build()
     }
 
     @Singleton
     @Provides
-    fun providePokeService(@Named("pokeRetrofit") retrofit: Retrofit): PokemonServcie {
-        return retrofit.create(PokemonServcie::class.java)
+    fun providePokeService(@Named("pokeRetrofit") retrofit: Retrofit): PokemonService {
+        return retrofit.create(PokemonService::class.java)
     }
 }

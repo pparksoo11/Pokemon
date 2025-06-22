@@ -17,6 +17,7 @@ import com.soo.presentation.viewmodel.PokemonListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 @AndroidEntryPoint
 class ListFragment : BaseFragment<FragmentListBinding>(R.layout.fragment_list) {
@@ -56,11 +57,31 @@ class ListFragment : BaseFragment<FragmentListBinding>(R.layout.fragment_list) {
         pokemonListAdapter.addLoadStateListener { loadState ->
             val isListEmpty = loadState.source.refresh is LoadState.NotLoading && pokemonListAdapter.itemCount == 0
             val isLoading = loadState.source.refresh is LoadState.Loading
-            val hasError = loadState.source.refresh is LoadState.Error || loadState.source.append is LoadState.Error || loadState.source.prepend is LoadState.Error
+            val errorState = loadState.source.append as? LoadState.Error
+                ?: loadState.source.prepend as? LoadState.Error
+                ?: loadState.source.refresh as? LoadState.Error
+
+            val hasError = errorState != null
 
             binding.progressBar.isVisible = isLoading
-            binding.pokemonList.isVisible = !isLoading && !isListEmpty
-            binding.tvError.isVisible = hasError || isListEmpty
+            binding.pokemonList.isVisible = !isLoading && !isListEmpty && !hasError
+
+            binding.tvError.apply {
+                isVisible = isListEmpty || hasError
+                text = when {
+                    hasError -> when (val error = errorState?.error) {
+                        is IOException -> "네트워크 연결을 확인해주세요."
+                        else -> "알 수 없는 오류가 발생했습니다."
+                    }
+                    isListEmpty -> "표시할 포켓몬이 없습니다."
+                    else -> ""
+                }
+            }
+
+            /*binding.btnRetry.apply {
+                isVisible = hasError
+                setOnClickListener { pokemonListAdapter.retry() }
+            }*/
         }
 
         // 초기 데이터 로딩

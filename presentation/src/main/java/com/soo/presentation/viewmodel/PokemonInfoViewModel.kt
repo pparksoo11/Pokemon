@@ -1,5 +1,6 @@
 package com.soo.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.soo.domain.model.FavoritePokemonInsertResult
 import com.soo.domain.usecase.DeleteFavoritePokemonUseCase
@@ -38,7 +39,7 @@ class PokemonInfoViewModel @Inject constructor(
         }.catch { e ->
             val errorType = when(e) {
                 is IOException -> ErrorType.Network
-                //TODO 다른 에러처리 추가 가능
+                //TODO 다른 에러 처리 추가 가능
                 else -> ErrorType.Unknown
             }
             _pokemonInfoState.value = UiState.Error(errorType)
@@ -61,11 +62,8 @@ class PokemonInfoViewModel @Inject constructor(
         getFavoritePokemonUseCase(id).onStart {
             _pokemonInfoState.value = UiState.Loading
         }.catch { e ->
-            val errorType = when(e) {
-                is IOException -> ErrorType.Network
-                //TODO 다른 에러처리 추가 가능
-                else -> ErrorType.Unknown
-            }
+            // TODO errorType 수정 시 다른 에러 처리 추가 가능
+            val errorType = ErrorType.Unknown
             _pokemonInfoState.value = UiState.Error(errorType)
         }.collect { result ->
             if (result != null) {
