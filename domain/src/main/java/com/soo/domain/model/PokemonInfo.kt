@@ -5,5 +5,5 @@ data class PokemonInfo(
     val name: String = "",
     val weight: Int = -1,
     val height: Int = -1,
-    val types: List<PokemonType>,
+    val types: List<PokemonType> = emptyList(),
 )
