@@ -1,4 +1,4 @@
-package com.soo.pokemon.di
+package com.soo.data.di
 
 import com.soo.data.remote.datasource.PokemonDataSource
 import com.soo.data.remote.datasourceImpl.PokemonDataSourceImpl
