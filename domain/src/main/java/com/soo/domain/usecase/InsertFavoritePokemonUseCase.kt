@@ -3,8 +3,9 @@ package com.soo.domain.usecase
 import com.soo.domain.model.FavoritePokemonInsertResult
 import com.soo.domain.model.PokemonInfo
 import com.soo.domain.repository.PokemonRepository
+import javax.inject.Inject
 
-class InsertFavoritePokemonUseCase(
+class InsertFavoritePokemonUseCase @Inject constructor(
     private val pokemonRepository: PokemonRepository
 ) {
     suspend operator fun invoke(pokemonInfo: PokemonInfo): FavoritePokemonInsertResult {

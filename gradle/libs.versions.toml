@@ -7,6 +7,7 @@ fragmentKtx = "1.8.8"
 glide = "4.12.0"
 hiltAndroid = "2.51.1"
 hiltCompiler = "1.2.0"
+javaxInject = "1"
 kotlin = "2.0.21"
 coreKtx = "1.16.0"
 junit = "4.13.2"
@@ -39,6 +40,7 @@ flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbo
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
+javaxInject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
