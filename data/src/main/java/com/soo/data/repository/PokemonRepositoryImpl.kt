@@ -5,7 +5,7 @@ import androidx.paging.PagingData
 import com.soo.data.local.datasource.PokemonLocalDataSource
 import com.soo.data.mapper.toDomain
 import com.soo.data.mapper.toEntity
-import com.soo.data.paging.PokemonListPagingSource
+import com.soo.data.remote.paging.PokemonListPagingSource
 import com.soo.data.remote.datasource.PokemonDataSource
 import com.soo.domain.model.Pokemon
 import com.soo.domain.model.PokemonInfo

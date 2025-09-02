@@ -1,10 +1,10 @@
-package com.soo.data.db.dao
+package com.soo.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.soo.data.db.entity.PokemonEntity
+import com.soo.data.local.entity.PokemonEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,9 +1,9 @@
 package com.soo.data.mapper
 
-import com.soo.data.db.entity.PokemonEntity
-import com.soo.data.db.entity.PokemonTypeEntity
-import com.soo.data.model.PokemonInfoDto
-import com.soo.data.model.PokemonResponse
+import com.soo.data.local.entity.PokemonEntity
+import com.soo.data.local.entity.PokemonTypeEntity
+import com.soo.data.remote.model.PokemonInfoDto
+import com.soo.data.remote.model.PokemonResponse
 import com.soo.domain.model.Pokemon
 import com.soo.domain.model.PokemonInfo
 import com.soo.domain.model.PokemonType

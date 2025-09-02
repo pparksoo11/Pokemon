@@ -1,4 +1,4 @@
-package com.soo.data.paging
+package com.soo.data.remote.paging
 
 import android.util.Log
 import androidx.paging.PagingSource

@@ -1,7 +1,7 @@
 package com.soo.data.service
 
-import com.soo.data.model.PokemonInfoDto
-import com.soo.data.model.PokemonResponse
+import com.soo.data.remote.model.PokemonInfoDto
+import com.soo.data.remote.model.PokemonResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

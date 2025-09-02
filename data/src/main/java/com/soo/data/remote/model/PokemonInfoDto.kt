@@ -1,4 +1,4 @@
-package com.soo.data.model
+package com.soo.data.remote.model
 
 data class PokemonInfoDto(
     val id: Int?,

@@ -1,11 +1,11 @@
-package com.soo.data.db
+package com.soo.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.soo.data.db.converter.PokemonConverters
-import com.soo.data.db.dao.PokemonDao
-import com.soo.data.db.entity.PokemonEntity
+import com.soo.data.local.PokemonConverters
+import com.soo.data.local.dao.PokemonDao
+import com.soo.data.local.entity.PokemonEntity
 
 @Database(
     entities =  [PokemonEntity::class],

@@ -2,8 +2,8 @@ package com.soo.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.soo.data.db.AppDataBase
-import com.soo.data.db.dao.PokemonDao
+import com.soo.data.local.AppDataBase
+import com.soo.data.local.dao.PokemonDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

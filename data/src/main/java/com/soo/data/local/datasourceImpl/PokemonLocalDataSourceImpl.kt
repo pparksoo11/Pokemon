@@ -1,7 +1,7 @@
 package com.soo.data.local.datasourceImpl
 
-import com.soo.data.db.dao.PokemonDao
-import com.soo.data.db.entity.PokemonEntity
+import com.soo.data.local.dao.PokemonDao
+import com.soo.data.local.entity.PokemonEntity
 import com.soo.data.local.datasource.PokemonLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

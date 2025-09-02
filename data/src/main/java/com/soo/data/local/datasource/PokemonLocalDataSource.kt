@@ -1,6 +1,6 @@
 package com.soo.data.local.datasource
 
-import com.soo.data.db.entity.PokemonEntity
+import com.soo.data.local.entity.PokemonEntity
 import kotlinx.coroutines.flow.Flow
 
 interface PokemonLocalDataSource {
