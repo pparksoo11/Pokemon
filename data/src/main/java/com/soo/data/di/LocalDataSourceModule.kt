@@ -1,4 +1,4 @@
-package com.soo.pokemon.di
+package com.soo.data.di
 
 import com.soo.data.local.datasource.PokemonLocalDataSource
 import com.soo.data.local.datasourceImpl.PokemonLocalDataSourceImpl
